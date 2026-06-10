@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="id" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YUYOshop - Top Up Game</title>
+  
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  
+  <script src="/_sdk/element_sdk.js"></script>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="/_sdk/telemetry_sdk.js"></script>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght=400;500;600;700;800&display=swap" rel="stylesheet">
+<body class="h-full text-white overflow-auto bg-cover bg-center bg-no-repeat bg-fixed" style="background-image: url('back.jpg');">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="h-full bg-dark text-white overflow-auto">
+  <div id="app" class="w-full min-h-full">
+    
+    <div id="promo-banner" class="w-full bg-gradient-to-r from-primary to-purple-600 text-center py-2 text-sm font-medium">
+      🔥🔥🔥🔥 PROMO! Diskon 10% untuk semua produk! GACORRRRRR🔥🔥🔥🔥
+    </div>
+
+    <header class="w-full px-4 py-4 flex items-center justify-between max-w-6xl mx-auto">
+      <div class="flex items-center gap-2">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center pulse-glow">
+          <i data-lucide="gamepad-2" class="w-5 h-5 text-white"></i>
+        </div>
+        <h1 id="store-name" class="text-xl font-bold bg-gradient-to-r from-white to-accent bg-clip-text text-transparent">YUYOshop</h1>
+      </div>
+      <div class="flex items-center gap-3">
+        <button onclick="showSection('home')" class="text-sm text-gray-300 hover:text-white transition">Home</button> 
+        <button onclick="showSection('orders')" class="text-sm text-gray-300 hover:text-white transition">Pesanan</button>
+      </div>
+    </header>
+
+    <div id="section-home" class="w-full max-w-6xl mx-auto px-4 pb-12">
+      <div class="fade-in mt-4 rounded-2xl bg-gradient-to-br from-surface to-indigo-900/50 p-6 md:p-10 border border-indigo-800/30">
+        <h2 id="hero-tagline" class="text-2xl md:text-3xl font-extrabold mb-2">Top Up Game Cepat &amp; Murah ⚡</h2>
+        <p class="text-gray-400 text-sm md:text-base">Proses otomatis 24 jam. Pembayaran mudah &amp; aman.</p>
+        <div class="mt-4 flex items-center gap-2">
+          <div class="flex items-center gap-1 text-highlight text-xs">
+            <i data-lucide="check-circle" class="w-4 h-4"></i> Terpercaya
+          </div>
+          <div class="flex items-center gap-1 text-highlight text-xs">
+            <i data-lucide="zap" class="w-4 h-4"></i> Instan
+          </div>
+          <div class="flex items-center gap-1 text-highlight text-xs">
+            <i data-lucide="shield" class="w-4 h-4"></i> Aman
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-6 relative">
+        <i data-lucide="search" class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i> 
+        <input id="search-input" type="text" placeholder="Cari game..." class="w-full bg-surface border border-indigo-800/40 rounded-xl pl-10 pr-4 py-3 text-sm focus:outline-none focus:border-primary transition" oninput="filterGames(this.value)">
+      </div>
+
+      <h3 class="mt-6 text-lg font-semibold mb-3">Pilih Game</h3>
+      <div id="games-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3"></div>
+
+      <div id="order-panel" class="hidden mt-8 fade-in">
+        <button onclick="closeOrder()" class="flex items-center gap-1 text-sm text-gray-400 hover:text-white mb-4">
+          <i data-lucide="arrow-left" class="w-4 h-4"></i> Kembali
+        </button>
+        <div class="bg-surface rounded-2xl border border-indigo-800/30 p-5">
+          <div class="flex items-center gap-3 mb-4">
+            <div id="order-game-icon" class="w-14 h-14 rounded-xl bg-indigo-800/50 flex items-center justify-center overflow-hidden"></div>
+            <div>
+              <h3 id="order-game-title" class="font-bold text-lg"></h3>
+              <p class="text-xs text-gray-400">Pilih nominal top up</p>
+            </div>
+          </div>
+          
+          <div class="mb-4">
+            <label class="text-sm text-gray-300 mb-1 block">Masukkan User ID</label> 
+            <input id="user-id-input" type="text" placeholder="Contoh: 123456789" class="w-full bg-dark border border-indigo-800/40 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-primary">
+          </div>
+          
+          <div id="denom-grid" class="grid grid-cols-2 sm:grid-cols-3 gap-2 mb-4"></div>
+          
+          <div class="mb-4">
+            <label class="text-sm text-gray-300 mb-2 block">Metode Pembayaran</label>
+            <div class="grid grid-cols-2 gap-2">
+              <button onclick="selectPayment('qris')" class="payment-btn bg-dark border border-indigo-800/40 rounded-lg p-3 flex flex-col items-center justify-center text-xs hover:border-primary transition" data-method="qris">
+                <img src="qr.png" alt="QRIS" class="h-6 object-contain mb-1">
+                <span>QRIS</span>
+               </button> 
+  
+              <button onclick="selectPayment('dana')" class="payment-btn bg-dark border border-indigo-800/40 rounded-lg p-3 flex flex-col items-center justify-center text-xs hover:border-primary transition" data-method="dana">
+                <img src="dn.png" alt="Dana" class="h-6 object-contain mb-1">
+                <span>Dana</span>
+              </button> 
+  
+              <button onclick="selectPayment('gopay')" class="payment-btn bg-dark border border-indigo-800/40 rounded-lg p-3 flex flex-col items-center justify-center text-xs hover:border-primary transition" data-method="gopay">
+                <img src="gp.png" alt="GoPay" class="h-6 object-contain mb-1">
+                <span>GoPay</span>
+              </button> 
+  
+              <button onclick="selectPayment('tf')" class="payment-btn bg-dark border border-indigo-800/40 rounded-lg p-3 flex flex-col items-center justify-center text-xs hover:border-primary transition" data-method="tf">
+                <img src="bk.png" alt="Transfer Bank" class="h-6 object-contain mb-1">
+                <span>Transfer Bank</span>
+              </button>
+            </div>
+          </div>
+          
+          <button onclick="submitOrder()" class="w-full bg-gradient-to-r from-primary to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white font-semibold py-3 rounded-xl transition">
+            Beli Sekarang
+          </button>
+          <p id="order-error" class="text-red-400 text-xs mt-2 hidden"></p>
+        </div>
+      </div>
+    </div>
+
+    <div id="section-orders" class="hidden w-full max-w-6xl mx-auto px-4 pb-12">
+      <h3 class="mt-6 text-lg font-semibold mb-3">Riwayat Pesanan</h3>
+      <div id="orders-list" class="space-y-3"></div>
+      <p id="no-orders" class="text-gray-500 text-sm text-center py-8">Belum ada pesanan</p>
+    </div>
+
+    <div id="success-modal" class="hidden fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4">
+      <div class="bg-surface rounded-2xl p-6 max-w-sm w-full text-center border border-indigo-800/30">
+        <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-highlight/20 flex items-center justify-center">
+          <i data-lucide="check" class="w-8 h-8 text-highlight"></i>
+        </div>
+        <h3 class="text-xl font-bold mb-2">Pesanan Berhasil! 🎉</h3>
+        <p class="text-gray-400 text-sm mb-1">ID Pesanan: <span id="modal-order-id" class="text-white font-mono"></span></p>
+        <p class="text-gray-400 text-sm mb-4">Pesananmu sedang diproses.</p>
+        <button onclick="closeModal()" class="bg-primary hover:bg-indigo-600 px-6 py-2 rounded-lg text-sm font-medium transition">OK</button>
+      </div>
+    </div>
+
+    <footer class="w-full border-t border-indigo-900/30 mt-8 py-6 text-center text-xs text-gray-500">
+      &copy; 2024 YUYOshop. All rights reserved. | Layanan top up game terpercaya.
+    </footer>
+  </div>
+
+  <script src="coba.js"></script>
+</body>
+</html>
