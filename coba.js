@@ -66,7 +66,6 @@ function selectGame(id) {
   document.getElementById('games-grid').classList.add('hidden');
   document.getElementById('order-panel').classList.remove('hidden');
   
-  // === BAGIAN YANG DIPERBAIKI (MENGGUNAKAN TAG IMG) ===
   const iconContainer = document.getElementById('order-game-icon');
   const isImage = selectedGame.icon.match(/\.(jpeg|jpg|gif|png|svg)$/i);
   
@@ -75,7 +74,6 @@ function selectGame(id) {
   } else {
     iconContainer.innerHTML = `<div class="text-3xl">${selectedGame.icon}</div>`;
   }
-  // ====================================================
   
   document.getElementById('order-game-title').textContent = selectedGame.name;
   document.getElementById('order-error').classList.add('hidden');
@@ -178,7 +176,7 @@ lucide.createIcons();
 
 // Element SDK Integration Block
 const defaultConfig = {
-  store_name: 'yuyopshop',
+  store_name: 'Yuyopshop',
   hero_tagline: 'Top Up Game Cepat & Murah ⚡',
   promo_text: '🔥 PROMO! Diskon 10% untuk semua produk!',
   background_color: '#0f0a2e',
@@ -235,7 +233,7 @@ window.elementSdk.init({
       var d=b.createElement('script');
       d.innerHTML="window.__CF$cv$params={r:'a08c90795b9ff8e0',t:'MTc4MDk3MDY1Mw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";
       b.getElementsByTagName('head')[0].appendChild(d);
-    }s
+    }
   }
   if(document.body){
     var a=document.createElement('iframe');
