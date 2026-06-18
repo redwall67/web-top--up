@@ -157,11 +157,7 @@ function renderOrders() {
   
   list.innerHTML = orders.map(o => `
     <div class="bg-surface border border-indigo-800/30 rounded-xl p-4 flex items-center gap-3">
-      
-      <div class="w-12 h-12 flex-shrink-0 flex items-center justify-center overflow-hidden rounded-xl bg-indigo-900/20 p-1">
-        ${o.icon}
-      </div>
-      
+      <div class="text-2xl">${o.icon}</div>
       <div class="flex-1 min-w-0">
         <p class="font-medium text-sm">${o.game} - ${o.denom}</p>
         <p class="text-xs text-gray-400">ID: ${o.userId} • ${o.time}</p>
@@ -173,6 +169,7 @@ function renderOrders() {
     </div>
   `).join('');
 }
+
 // Initial Run
 renderGames();
 lucide.createIcons();
